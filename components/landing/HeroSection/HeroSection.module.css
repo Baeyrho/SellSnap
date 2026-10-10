@@ -1,0 +1,171 @@
+.section {
+  position: relative;
+  padding: 48px 16px 56px;
+  /* #F1F5F9 is the SVG's own background colour — matches perfectly as a paint fallback */
+  background-color: #f1f5f9;
+  background-image: url('/ecommerce-products.svg');
+  /* 200% on mobile keeps icon sizing readable without over-densifying the small viewport */
+  background-size: 200%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+.container {
+  position: relative;
+  /* isolation:isolate ensures ::before stacks in its own context below child content */
+  isolation: isolate;
+  max-width: 880px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Soft radial-gradient protection zone behind the hero copy.
+   Fades from near-opaque white at the content core to fully transparent
+   at the edges — icons remain visible on the periphery, invisible under text. */
+.container::before {
+  content: '';
+  position: absolute;
+  inset: -48px -32px;
+  background: radial-gradient(
+    ellipse 72% 68% at 50% 44%,
+    rgba(241, 245, 249, 0.97) 0%,
+    rgba(241, 245, 249, 0.88) 38%,
+    rgba(241, 245, 249, 0.55) 62%,
+    rgba(241, 245, 249, 0) 100%
+  );
+  z-index: -1;
+  pointer-events: none;
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+
+.headline {
+  font-size: var(--headline-small-font-size);
+  font-weight: var(--headline-large-font-weight);
+  line-height: 1.2;
+  color: var(--color-on-background);
+  letter-spacing: -0.5px;
+  max-width: 780px;
+}
+
+.highlight {
+  color: var(--color-primary);
+}
+
+.subheadline {
+  font-size: var(--body-small-font-size);
+  line-height: 1.5;
+  color: var(--color-on-surface-variant);
+  max-width: 620px;
+}
+
+.ctaGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 32px;
+  /* Mobile: fill the copy column, then bleed past the section's 16px padding
+     so the buttons sit 8px from each screen edge. align-self is needed because
+     .textContent centres its children, which would otherwise shrink-wrap the group. */
+  align-self: stretch;
+  margin-left: -8px;
+  margin-right: -8px;
+}
+
+.primaryCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 12px 24px;
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: var(--label-small-font-size);
+  font-weight: 600;
+  border-radius: 8px; /* Buttons: 8px */
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.primaryCta:hover {
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+}
+
+.primaryCta:active {
+  transform: scale(0.98);
+}
+
+.arrow {
+  transition: transform 0.2s ease;
+}
+
+.primaryCta:hover .arrow {
+  transform: translateX(4px);
+}
+
+.secondaryCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 12px 24px;
+  background-color: var(--color-surface-container-low);
+  color: var(--color-on-surface);
+  font-size: var(--label-small-font-size);
+  font-weight: 500;
+  border: 1px solid var(--color-outline-variant);
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.secondaryCta:hover {
+  background-color: var(--color-surface-container);
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 80px 24px 96px;
+    /* cover on desktop so icons fill the full section naturally */
+    background-size: cover;
+  }
+
+  .container::before {
+    inset: -80px -48px;
+    background: radial-gradient(
+      ellipse 68% 72% at 50% 44%,
+      rgba(241, 245, 249, 0.96) 0%,
+      rgba(241, 245, 249, 0.82) 40%,
+      rgba(241, 245, 249, 0.42) 65%,
+      rgba(241, 245, 249, 0) 100%
+    );
+  }
+
+  .headline {
+    font-size: var(--headline-large-font-size);
+  }
+
+  .subheadline {
+    font-size: 18px;
+  }
+
+  .ctaGroup {
+    flex-direction: row;
+    align-self: center;
+    margin-left: 0;
+    margin-right: 0;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,139 @@
+.shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 16px 0;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.title {
+  font-size: var(--text-2xl-font-size);
+  line-height: var(--text-2xl-line-height);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.01em;
+  color: var(--color-on-surface);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: var(--text-md-font-size);
+  line-height: var(--text-md-line-height);
+  color: var(--color-on-surface-variant);
+  margin: 4px 0 0 0;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.closeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 8px;
+  background-color: transparent;
+  text-decoration: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.closeButton.secondary {
+  border: 1px solid var(--color-outline-variant);
+  background-color: transparent;
+  color: var(--color-on-surface-variant);
+}
+
+.closeButton.secondary:hover {
+  background-color: var(--color-surface-container-low);
+  border-color: var(--color-outline);
+  color: var(--color-on-surface);
+  transform: scale(1.04);
+}
+
+.closeButton.outline {
+  border: 1px solid var(--color-outline);
+  background-color: transparent;
+  color: var(--color-on-surface);
+}
+
+.closeButton.outline:hover {
+  background-color: var(--color-outline-variant);
+}
+
+.closeButton.ghost {
+  border: none;
+  background-color: transparent;
+  color: var(--color-on-surface-variant);
+}
+
+.closeButton.ghost:hover {
+  background-color: var(--color-surface-container-high);
+  color: var(--color-on-surface);
+}
+
+.closeButton:active {
+  transform: scale(0.96);
+}
+
+.closeButton:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 2px;
+}
+
+.closeIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.content {
+  width: 100%;
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .shell {
+    padding: 24px 24px 0;
+  }
+
+  .header {
+    margin-bottom: 24px;
+  }
+
+  .title {
+    font-size: var(--text-3xl-font-size);
+    line-height: var(--text-3xl-line-height);
+  }
+}
+
+@media (min-width: 1024px) {
+  .shell {
+    padding: 24px 32px 0;
+  }
+
+  .header {
+    margin-bottom: 24px;
+  }
+}

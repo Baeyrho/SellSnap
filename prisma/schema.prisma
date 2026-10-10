@@ -1,0 +1,166 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                       String             @id @default(uuid())
+  email                    String             @unique
+  passwordHash             String
+  name                     String
+  displayName              String?
+  businessName             String?
+  businessBio              String?
+  whatsappNumber           String?
+  phoneNumber              String?
+  businessLocation         String?
+  logoUrl                  String?
+  bankCode                 String?
+  accountNumber            String?
+  flutterwaveSubaccountId  String?
+  deletedAt                DateTime?
+  /// Incremented whenever sessions must be revoked (password change/reset, email change). The JWT
+  /// carries the value it was issued with; a mismatch invalidates the session on next use.
+  tokenVersion             Int                @default(0)
+  /// Consecutive failed credential logins. Reset to 0 on success. Backs the soft account lockout.
+  failedLoginAttempts      Int                @default(0)
+  /// Set once `failedLoginAttempts` crosses the threshold; logins are refused until it passes.
+  lockedUntil              DateTime?
+  createdAt                DateTime           @default(now())
+  updatedAt                DateTime           @updatedAt
+  products                 Product[]
+  orders                   Order[]
+  resetTokens              PasswordResetToken[]
+  retiredEmails            RetiredEmail[]
+  emailChangeTokens        EmailChangeToken[]
+
+  @@index([email])
+}
+
+model Product {
+  id          String         @id @default(uuid())
+  sellerId    String
+  slug        String         @unique
+  name        String
+  description String?
+  priceKobo   Int
+  imageUrl    String
+  imageUrls   String[]       @default([])
+  status      ProductStatus  @default(ACTIVE)
+  deletedAt   DateTime?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  seller      User           @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  orders      Order[]
+
+  @@index([sellerId])
+  @@index([slug])
+  @@index([status])
+}
+
+model Order {
+  id             String      @id @default(uuid())
+  productId      String
+  sellerId       String
+  amountKobo     Int
+  status         OrderStatus @default(PENDING)
+  customerName   String?
+  customerEmail  String?
+  transactionRef String      @unique
+  flutterwaveTxId Int?
+  refundStatus   RefundStatus?
+  refundId       Int?
+  /// Set when the provider confirmed a successful payment for an order that had already been
+  /// resolved `FAILED` by the abandoned-order sweep. The money is real but the order is already
+  /// closed, so it is never auto-fulfilled and never auto-refunded — a human must decide. Left
+  /// null in the normal case; see `markLatePaymentDetected` in lib/payments.ts.
+  latePaymentDetectedAt DateTime?
+  /// Last time `reconcileRequestedRefunds` polled Flutterwave for this order's refund. Advances on
+  /// every poll so a refund the provider never settles cannot hold the same batch slot forever and
+  /// starve newer reversals. Not a settlement signal — `refundStatus` remains authoritative.
+  lastRefundCheckAt DateTime?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  product        Product     @relation(fields: [productId], references: [id], onDelete: Restrict)
+  seller         User        @relation(fields: [sellerId], references: [id], onDelete: Restrict)
+
+  @@index([sellerId])
+  @@index([transactionRef])
+  @@index([status])
+  @@index([latePaymentDetectedAt])
+  @@index([refundStatus, lastRefundCheckAt])
+}
+
+enum OrderStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+/// Lifecycle of a reversal SellSnap raised against a provider transaction. Kept separate from
+/// `OrderStatus` because the refund outlives the order decision: an order that was overpaid is
+/// `FAILED` (never fulfilled) while the refund itself may still be outstanding.
+enum RefundStatus {
+  /// Refund sent to Flutterwave; outcome not yet confirmed as disbursed.
+  REQUESTED
+  /// Flutterwave confirmed the refund was disbursed to the customer.
+  COMPLETED
+  /// The refund request or the refund itself failed. Requires manual follow-up.
+  FAILED
+  /// The amount owed back is below Flutterwave's published minimum refund amount (NGN 100), so no
+  /// reversal could be raised automatically. The buyer is still owed this money; it must be
+  /// returned manually via the Flutterwave dashboard.
+  BELOW_MINIMUM
+}
+
+enum ProductStatus {
+  ACTIVE
+  INACTIVE
+  DELETED
+}
+
+model PasswordResetToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([token])
+  @@index([userId])
+}
+
+/// Permanently retired email addresses — can never be used to create a new account.
+model RetiredEmail {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  retiredAt DateTime @default(now())
+
+  @@index([email])
+  @@index([userId])
+}
+
+/// A pending request to change a seller's email to `newEmail`. The raw token is emailed to the new
+/// address and only its digest is stored here; the change is applied only when the token is
+/// presented. This proves the caller controls the new address before it becomes the login identity.
+model EmailChangeToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  newEmail  String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([token])
+  @@index([userId])
+}

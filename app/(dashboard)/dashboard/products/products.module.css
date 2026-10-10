@@ -1,0 +1,25 @@
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 32px 24px;
+  border: 1px dashed var(--color-outline-variant);
+  border-radius: 12px;
+  background-color: var(--color-surface);
+}
+
+.emptyText {
+  font-size: var(--text-md-font-size);
+  line-height: var(--text-md-line-height);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-on-surface);
+  margin: 0 0 4px 0;
+}
+
+.emptyHint {
+  font-size: var(--text-sm-font-size);
+  line-height: var(--text-sm-line-height);
+  color: var(--color-on-surface-variant);
+  margin: 0;
+}

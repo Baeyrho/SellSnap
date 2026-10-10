@@ -1,0 +1,136 @@
+.section {
+  padding: 48px 16px;
+  background-color: var(--color-background);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  border-radius: 12px; /* Cards: 12px */
+  padding: 32px 20px;
+  color: var(--color-on-primary);
+  text-align: center;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+
+.content {
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.badge {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 4px; /* Small elements: 4px */
+  font-size: var(--label-small-font-size);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.title {
+  font-size: var(--headline-small-font-size);
+  font-weight: var(--headline-large-font-weight);
+  line-height: 1.2;
+  color: #ffffff;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 15px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 8px;
+}
+
+.primaryBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 12px 24px;
+  background-color: #ffffff;
+  color: var(--color-on-primary-container);
+  font-size: var(--label-small-font-size);
+  font-weight: 700;
+  border-radius: 8px; /* Buttons: 8px */
+  text-decoration: none;
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.primaryBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.primaryBtn:active {
+  transform: scale(0.98);
+}
+
+.arrow {
+  transition: transform 0.2s ease;
+}
+
+.primaryBtn:hover .arrow {
+  transform: translateX(4px);
+}
+
+.secondaryBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 8px 16px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: underline;
+  opacity: 0.9;
+}
+
+.secondaryBtn:hover {
+  opacity: 1;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 80px 24px;
+  }
+
+  .card {
+    padding: 56px 40px;
+  }
+
+  .title {
+    font-size: var(--headline-medium-font-size);
+  }
+
+  .subtitle {
+    font-size: 17px;
+  }
+
+  .actions {
+    flex-direction: row;
+    max-width: none;
+    justify-content: center;
+  }
+}

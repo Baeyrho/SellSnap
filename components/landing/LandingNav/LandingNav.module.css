@@ -1,0 +1,109 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: var(--color-surface-container-lowest);
+  border-bottom: 1px solid var(--color-outline-variant);
+  backdrop-filter: blur(8px);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: var(--title-medium-font-size);
+  color: var(--color-primary);
+  text-decoration: none;
+  letter-spacing: -0.5px;
+}
+
+.navLinks {
+  display: none;
+  align-items: center;
+  gap: 24px;
+}
+
+.link {
+  color: var(--color-on-surface-variant);
+  font-size: var(--label-small-font-size);
+  font-weight: var(--label-small-font-weight);
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: var(--color-primary);
+}
+
+.linkActive {
+  color: var(--color-primary);
+  transition: color 0.2s ease;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.loginLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 8px 16px;
+  color: var(--color-on-surface);
+  font-size: var(--label-small-font-size);
+  font-weight: var(--label-small-font-weight);
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.loginLink:hover {
+  background-color: var(--color-surface-container);
+}
+
+.ctaBtn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 8px 16px;
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: var(--label-small-font-size);
+  font-weight: var(--label-small-font-weight);
+  border-radius: 8px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.ctaBtn:hover {
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+}
+
+.ctaBtn:active {
+  transform: scale(0.98);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 16px 24px;
+  }
+
+  .navLinks {
+    display: flex;
+  }
+
+  .ctaBtn {
+    display: inline-flex;
+    padding: 10px 20px;
+  }
+}

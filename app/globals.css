@@ -1,0 +1,32 @@
+@import '../tokens/tokens.css';
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  font-family: var(--body-large-font-family), sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-on-background);
+}
+
+html {
+  overflow-x: hidden;
+}
+
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+input,
+button,
+select,
+textarea {
+  font-family: inherit;
+}

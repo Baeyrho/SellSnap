@@ -1,0 +1,209 @@
+.section {
+  padding: 48px 16px;
+  background-color: var(--color-surface-container-low);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.title {
+  font-size: var(--headline-small-font-size);
+  font-weight: var(--headline-large-font-weight);
+  color: var(--color-on-surface);
+  line-height: 1.25;
+}
+
+.calculatorCard {
+  background-color: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: 12px; /* Cards: 12px */
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+}
+
+.inputColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fieldHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-on-surface);
+}
+
+.fieldValue {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.rangeInput {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+.presetGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.presetBtn {
+  min-height: 40px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--color-outline-variant);
+  background-color: var(--color-surface);
+  color: var(--color-on-surface-variant);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.presetBtn:hover {
+  background-color: var(--color-surface-container);
+}
+
+.presetActive {
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+  border-color: var(--color-primary);
+}
+
+.summaryColumn {
+  background-color: var(--color-surface-container-low);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.summaryLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.summaryTotal {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--color-on-surface);
+  margin: 0;
+  line-height: 1.1;
+}
+
+.summaryNote {
+  font-size: 13px;
+  color: var(--color-on-surface-variant);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.feeBreakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-outline-variant);
+}
+
+.feeRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--color-on-surface);
+}
+
+.feeFree {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.feeHighlight {
+  font-weight: 600;
+}
+
+.calcCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 12px 20px;
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  font-size: var(--label-small-font-size);
+  font-weight: 600;
+  border-radius: 8px; /* Buttons: 8px */
+  text-decoration: none;
+  text-align: center;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin-top: 8px;
+}
+
+.calcCta:hover {
+  background-color: var(--color-primary-container);
+  color: var(--color-on-primary-container);
+}
+
+.calcCta:active {
+  transform: scale(0.98);
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: 80px 24px;
+  }
+
+  .calculatorCard {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 40px;
+    padding: 32px;
+  }
+
+  .title {
+    font-size: var(--headline-medium-font-size);
+  }
+
+  .summaryTotal {
+    font-size: 40px;
+  }
+}
