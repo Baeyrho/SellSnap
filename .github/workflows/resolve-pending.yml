@@ -1,0 +1,48 @@
+name: SellSnap Payment Reconciliation
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+
+permissions: {}
+
+jobs:
+  resolve-pending:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Call production resolver
+        shell: bash
+        env:
+          SELLSNAP_PRODUCTION_URL: ${{ vars.SELLSNAP_PRODUCTION_URL }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${SELLSNAP_PRODUCTION_URL:-}" ]]; then
+            echo "::error::Missing SELLSNAP_PRODUCTION_URL repository variable."
+            exit 1
+          fi
+
+          if [[ -z "${CRON_SECRET:-}" ]]; then
+            echo "::error::Missing CRON_SECRET repository secret."
+            exit 1
+          fi
+
+          status_code=$(curl \
+            --silent \
+            --show-error \
+            --output /dev/null \
+            --write-out '%{http_code}' \
+            --max-time 240 \
+            --request GET \
+            --header "Authorization: Bearer ${CRON_SECRET}" \
+            "${SELLSNAP_PRODUCTION_URL%/}/api/cron/resolve-pending")
+
+          if [[ ! "$status_code" =~ ^2[0-9][0-9]$ ]]; then
+            echo "::error::Resolver returned HTTP ${status_code}."
+            exit 1
+          fi
+
+          echo "Resolver completed with HTTP ${status_code}."
